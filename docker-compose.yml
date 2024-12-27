@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  pgsql:
+    image: postgres:11-alpine
+    ports:
+      - '5432:5432'
+    container_name: 'pg_eventos'
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_PG_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PG_PASSWORD}
+      POSTGRES_DB: ${DB_PG_DATABASE}
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - '8080:8080'
+
+  redis:
+    container_name: cache
+    image: redis
+    ports:
+      - '${REDIS_PORT}:6379'
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
+    driver: local
