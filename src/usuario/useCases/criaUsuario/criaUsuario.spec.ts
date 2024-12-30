@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CriaUsuarioUseCase } from './criaUsuario.use-case';
-import { CriaUsuarioDto } from '../models/dtos/criaUsuario.dto';
+import { CriaUsuarioDto } from '../../models/dtos/criaUsuario.dto';
 
 describe('CriaUsuarioUseCase', () => {
   const mockRepository = {

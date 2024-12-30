@@ -14,4 +14,8 @@ export class UsuarioRepo implements IUsuarioRepo {
   async criar(param: UsuarioEntity): Promise<void> {
     await this.usuarioRepo.save(param);
   }
+
+  async buscaPorEmail(param: string): Promise<UsuarioEntity> {
+    return await this.usuarioRepo.findOne({ where: { email: param } });
+  }
 }

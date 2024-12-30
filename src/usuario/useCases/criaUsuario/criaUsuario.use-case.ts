@@ -4,9 +4,9 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { IUsuarioRepo } from '../models/interfaces/usuarioRepo.interface';
-import { CriaUsuarioDto } from '../models/dtos/criaUsuario.dto';
-import { UsuarioEntity } from '../models/entities/usuario.entity';
+import { IUsuarioRepo } from 'src/usuario/models/interfaces/usuarioRepo.interface';
+import { CriaUsuarioDto } from 'src/usuario/models/dtos/criaUsuario.dto';
+import { UsuarioEntity } from 'src/usuario/models/entities/usuario.entity';
 
 @Injectable()
 export class CriaUsuarioUseCase {

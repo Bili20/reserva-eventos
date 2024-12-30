@@ -30,7 +30,11 @@ export class UsuarioEntity {
   @OneToMany(() => ReservaEntity, (reserva: ReservaEntity) => reserva.usuario)
   reserva: ReservaEntity;
 
-  encriptaSenha(param: string) {
+  encriptaSenha(param: string): void {
     this.senha = bcrypt.hashSync(param, Number(process.env.SALT));
+  }
+
+  comparaSenha(param: string, senhaAtual: string): boolean {
+    return bcrypt.compareSync(param, senhaAtual);
   }
 }
