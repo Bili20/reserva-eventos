@@ -7,7 +7,7 @@ export class BuscaPorEmailUseCase {
 
   async execute(param: string) {
     if (!param) {
-      throw new BadRequestException({ message: 'Informe um parametro.' });
+      throw new BadRequestException({ message: 'Informe um email.' });
     }
     return await this.usuarioRepo.buscaPorEmail(param);
   }
