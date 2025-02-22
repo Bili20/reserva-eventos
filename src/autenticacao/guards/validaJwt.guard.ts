@@ -8,7 +8,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { IS_PUBLIC_KEY } from '../decorator/rotaPublica.decorator';
+import { IS_PUBLIC_KEY } from '../decorator/tornaRotaPublica.decorator';
 
 @Injectable()
 export class ValidaJwtGuard implements CanActivate {
@@ -37,6 +37,8 @@ export class ValidaJwtGuard implements CanActivate {
 
     try {
       await this.jwtService.verifyAsync(token);
+      const decoded = await this.jwtService.decode(token);
+      request['user'] = decoded;
       return true;
     } catch (e) {
       throw new UnauthorizedException({ message: 'Token inválido.' });

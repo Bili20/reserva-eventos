@@ -2,6 +2,7 @@ import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AutenticacaoDto } from '../../models/dtos/login.dto';
 import { BuscaPorEmailUseCase } from 'src/usuario/useCases/buscaPorEmail/buscaPorEmail.use-case';
+import { Payload } from 'src/autenticacao/models/dtos/payload.dto';
 
 @Injectable()
 export class LoginUseCase {
@@ -10,8 +11,10 @@ export class LoginUseCase {
   private readonly buscaPorEmailUseCase: BuscaPorEmailUseCase;
 
   async execute(param: AutenticacaoDto) {
-    await this.validaUsuario(param);
-    const payload = { username: param.email };
+    const usuario = await this.validaUsuario(param);
+    const payload = new Payload();
+    payload.sub = usuario.id;
+    payload.username = usuario.email;
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
@@ -25,5 +28,6 @@ export class LoginUseCase {
         messgae: 'Usuário ou senha invalidos.',
       });
     }
+    return usuario;
   }
 }
