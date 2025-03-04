@@ -5,11 +5,10 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { minioClient } from 'src/config/minioConfig';
-import { IEventoRepo } from 'src/evento/models/interfaces/eventoRepo.interface';
-import { BuscaUmEventoUsecase } from '../buscaUmEvento/buscaUmEvento.use-case';
 import { Payload } from 'src/autenticacao/models/dtos/payload.dto';
+import { minioClient } from 'src/config/minioConfig';
 import { SalvaImagemDto } from 'src/evento/models/dtos/salvaImagem.dto';
+import { BuscaUmEventoUsecase } from '../buscaUmEvento/buscaUmEvento.use-case';
 // Identificar se o evento é da pessoa para salvar a imagem
 @Injectable()
 export class SalvaImagemUseCase {

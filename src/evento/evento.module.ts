@@ -7,6 +7,9 @@ import { CriaEventoController } from './useCases/criaEvento/criaEvento.controlle
 import { SalvaImagemUseCase } from './useCases/salvaImagem/salvaImagem.use-case';
 import { SalvaImagemController } from './useCases/salvaImagem/salvaImagem.controller';
 import { BuscaUmEventoUsecase } from './useCases/buscaUmEvento/buscaUmEvento.use-case';
+import { AtualizaEventoUseCase } from './useCases/atualizaEvento/atualizaEvento.use-case';
+import { AtualizaEventoController } from './useCases/atualizaEvento/atualizaEvento.controller';
+import { BuscaEventoUsuarioUseCase } from './useCases/buscaEventoUsuario/buscaEventoUsuario.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([EventoEntity])],
@@ -15,8 +18,14 @@ import { BuscaUmEventoUsecase } from './useCases/buscaUmEvento/buscaUmEvento.use
     CriaEventoUseCase,
     SalvaImagemUseCase,
     BuscaUmEventoUsecase,
+    AtualizaEventoUseCase,
+    BuscaEventoUsuarioUseCase,
     { provide: 'IEventoRepo', useExisting: EventoRepo },
   ],
-  controllers: [CriaEventoController, SalvaImagemController],
+  controllers: [
+    CriaEventoController,
+    SalvaImagemController,
+    AtualizaEventoController,
+  ],
 })
 export class EventoModule {}

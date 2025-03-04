@@ -5,6 +5,7 @@ import { UsuarioModule } from 'src/usuario/usuario.module';
 import { LoginController } from './useCases/login/login.controller';
 import { LoginUseCase } from './useCases/login/login.use-case';
 import * as dotenv from 'dotenv';
+import { ValidaUsuario } from './useCases/validaUsuario/validaUsuario';
 dotenv.config();
 @Module({
   imports: [
@@ -15,7 +16,7 @@ dotenv.config();
       signOptions: { expiresIn: '1d' },
     }),
   ],
-  providers: [LoginUseCase],
+  providers: [LoginUseCase, ValidaUsuario],
   controllers: [LoginController],
 })
 export class AutenticacaoModule {}
