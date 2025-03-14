@@ -1,5 +1,9 @@
 ## Description
 
+Um projeto para mostrar um pouco dos meus conhecimentos no framework Nestjs.
+
+A ideia é uma api de cadastro de eventos.
+
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Project setup
