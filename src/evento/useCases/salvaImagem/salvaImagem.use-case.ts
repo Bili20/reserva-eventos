@@ -7,14 +7,14 @@ import {
 import { Payload } from 'src/autenticacao/models/dtos/payload.dto';
 import { SalvaImagemDto } from 'src/evento/models/dtos/salvaImagem.dto';
 import { AtualizaEventoUseCase } from '../atualizaEvento/atualizaEvento.use-case';
-import { Buckeradapter } from 'src/evento/bucket/bucket.adapter';
+import { BucketFacade } from 'src/evento/bucket/bucket.facade';
 import { BuscaUmEventoUsuarioUseCase } from '../buscaUmEventoUsuario/buscaUmEventoUsuario.use-case';
 @Injectable()
 export class SalvaImagemUseCase {
   constructor(
     private readonly buscaUmEventoUsuarioUseCase: BuscaUmEventoUsuarioUseCase,
     private readonly atualizaEventoUseCase: AtualizaEventoUseCase,
-    private readonly buckeradapter: Buckeradapter,
+    private readonly bucketFacade: BucketFacade,
   ) {}
 
   async execute(param: SalvaImagemDto, usuario: Payload) {
@@ -26,7 +26,7 @@ export class SalvaImagemUseCase {
       let antigoNomeImagem = evento.imagem;
       const novoNomeImagem = evento.renomearImagem(param.imagem.originalname);
 
-      await this.buckeradapter.salvar(
+      await this.bucketFacade.salvar(
         novoNomeImagem,
         antigoNomeImagem,
         param.imagem.buffer,

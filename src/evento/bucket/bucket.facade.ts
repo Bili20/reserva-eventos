@@ -2,7 +2,7 @@ import { IBucket } from '../models/interfaces/bucket.interface';
 import { minioClient } from 'src/config/minioConfig';
 import * as dotenv from 'dotenv';
 dotenv.config();
-export class Buckeradapter implements IBucket {
+export class BucketFacade implements IBucket {
   async salvar(
     imagem: string,
     antigaImagem: string,

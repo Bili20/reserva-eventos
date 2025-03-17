@@ -11,7 +11,7 @@ import { AtualizaEventoUseCase } from './useCases/atualizaEvento/atualizaEvento.
 import { AtualizaEventoController } from './useCases/atualizaEvento/atualizaEvento.controller';
 import { BuscaEventoUsuarioUseCase } from './useCases/buscaEventoUsuario/buscaEventoUsuario.use-case';
 import { BuscaEventoUsuarioController } from './useCases/buscaEventoUsuario/bsucaEventoUsuario.controller';
-import { Buckeradapter } from './bucket/bucket.adapter';
+import { Buckeradapter } from './bucket/bucket.facade';
 import { BuscaUmEventoUsuarioUseCase } from './useCases/buscaUmEventoUsuario/buscaUmEventoUsuario.use-case';
 
 @Module({
