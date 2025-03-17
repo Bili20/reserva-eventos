@@ -21,19 +21,15 @@ export class EventoEntity {
     localizacao: string,
     valor: number,
     usuario_id: number,
-    capacidadeSobrando?: number,
-    imagem?: string,
   ) {
     this.titulo = titulo;
     this.descricao = descricao;
     this.data = data;
     this.horario = horario;
     this.capacidade = capacidade;
-    this.imagem = imagem;
     this.localizacao = localizacao;
     this.valor = valor;
     this.usuario_id = usuario_id;
-    this.capacidadeSobrando = capacidadeSobrando;
   }
 
   @PrimaryGeneratedColumn()
@@ -82,5 +78,10 @@ export class EventoEntity {
         message: 'A data do evento deve ser maior ou igual a data de hoje.',
       });
     }
+  }
+  renomearImagem(nome: string) {
+    const valores = nome.split('.', 2);
+    this.imagem = valores[0] + new Date().getTime() + '.' + valores[1];
+    return this.imagem;
   }
 }

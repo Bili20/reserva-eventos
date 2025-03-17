@@ -1,12 +1,8 @@
 import { IsNumber } from '@nestjs/class-validator';
-import { IsOptional } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 export class BuscaEventoUsuarioDto {
   @IsNumber()
-  @IsOptional()
-  usuario_id?: number;
-
-  @IsOptional()
-  @IsNumber()
-  id?: number;
+  @IsNotEmpty()
+  usuario_id: number;
 }

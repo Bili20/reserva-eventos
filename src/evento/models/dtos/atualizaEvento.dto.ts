@@ -4,29 +4,33 @@ import { IsNumber, IsOptional } from 'class-validator';
 export class AtualizaEventoDto {
   @IsString()
   @IsOptional()
-  titulo: string;
+  titulo?: string;
 
   @IsString()
   @IsOptional()
-  descricao: string;
+  descricao?: string;
 
   @IsOptional()
   @IsString()
-  data: Date;
+  data?: Date;
 
   @IsString()
   @IsOptional()
-  horario: string;
+  horario?: string;
 
   @IsNumber({ maxDecimalPlaces: 5 })
   @IsOptional()
-  capacidade: number;
+  capacidade?: number;
 
   @IsString()
   @IsOptional()
-  localizacao: string;
+  localizacao?: string;
 
   @IsNumber()
   @IsOptional()
-  valor: number;
+  valor?: number;
+
+  @IsString()
+  @IsOptional()
+  imagem?: string;
 }

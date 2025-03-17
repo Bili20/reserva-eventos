@@ -10,6 +10,9 @@ import { BuscaUmEventoUsecase } from './useCases/buscaUmEvento/buscaUmEvento.use
 import { AtualizaEventoUseCase } from './useCases/atualizaEvento/atualizaEvento.use-case';
 import { AtualizaEventoController } from './useCases/atualizaEvento/atualizaEvento.controller';
 import { BuscaEventoUsuarioUseCase } from './useCases/buscaEventoUsuario/buscaEventoUsuario.use-case';
+import { BuscaEventoUsuarioController } from './useCases/buscaEventoUsuario/bsucaEventoUsuario.controller';
+import { Buckeradapter } from './bucket/bucket.adapter';
+import { BuscaUmEventoUsuarioUseCase } from './useCases/buscaUmEventoUsuario/buscaUmEventoUsuario.use-case';
 
 @Module({
   imports: [TypeOrmModule.forFeature([EventoEntity])],
@@ -20,12 +23,15 @@ import { BuscaEventoUsuarioUseCase } from './useCases/buscaEventoUsuario/buscaEv
     BuscaUmEventoUsecase,
     AtualizaEventoUseCase,
     BuscaEventoUsuarioUseCase,
+    BuscaUmEventoUsuarioUseCase,
     { provide: 'IEventoRepo', useExisting: EventoRepo },
+    Buckeradapter,
   ],
   controllers: [
     CriaEventoController,
     SalvaImagemController,
     AtualizaEventoController,
+    BuscaEventoUsuarioController,
   ],
 })
 export class EventoModule {}

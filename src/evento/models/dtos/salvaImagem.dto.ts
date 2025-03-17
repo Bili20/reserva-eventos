@@ -1,8 +1,9 @@
 import { IsNotEmpty, IsNumber } from '@nestjs/class-validator';
 import { Type } from 'class-transformer';
+import { IsOptional } from 'class-validator';
 
 export class SalvaImagemDto {
-  @IsNotEmpty()
+  @IsOptional()
   imagem: Express.Multer.File;
 
   @IsNumber()

@@ -8,15 +8,15 @@ import { Payload } from 'src/autenticacao/models/dtos/payload.dto';
 import { AtualizaEventoDto } from 'src/evento/models/dtos/atualizaEvento.dto';
 import { EventoEntity } from 'src/evento/models/entities/evento.entity';
 import { IEventoRepo } from 'src/evento/models/interfaces/eventoRepo.interface';
-import { BuscaUmEventoUsecase } from '../buscaUmEvento/buscaUmEvento.use-case';
 import { BuscaEventoUsuarioUseCase } from '../buscaEventoUsuario/buscaEventoUsuario.use-case';
+import { BuscaUmEventoUsuarioUseCase } from '../buscaUmEventoUsuario/buscaUmEventoUsuario.use-case';
 
 @Injectable()
 export class AtualizaEventoUseCase {
   @Inject('IEventoRepo')
   private readonly eventoRepo: IEventoRepo;
-  @Inject(BuscaEventoUsuarioUseCase)
-  private readonly buscaEventoUsuarioUseCase: BuscaEventoUsuarioUseCase;
+  @Inject(BuscaUmEventoUsuarioUseCase)
+  private readonly buscaUmEventoUsuarioUseCase: BuscaUmEventoUsuarioUseCase;
 
   async execute(id: number, param: AtualizaEventoDto, usuario: Payload) {
     const newEvento = new EventoEntity(
@@ -29,8 +29,9 @@ export class AtualizaEventoUseCase {
       param.valor,
       usuario.sub,
     );
+    newEvento.imagem = param.imagem;
     try {
-      await this.buscaEventoUsuarioUseCase.execute({
+      await this.buscaUmEventoUsuarioUseCase.execute({
         id: id,
         usuario_id: usuario.sub,
       });

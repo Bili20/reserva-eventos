@@ -19,12 +19,18 @@ export class EventoRepo implements IEventoRepo {
     return await this.eventoRepo.findOne({ where: { id: id } });
   }
 
-  async buscaEventoUsuario(
-    usuario_id: number,
-    id?: number,
-  ): Promise<EventoEntity[]> {
+  async buscaEventoUsuario(usuario_id: number): Promise<EventoEntity[]> {
     return await this.eventoRepo.find({
-      where: { usuario_id: usuario_id, id: id != id ? id : null },
+      where: { usuario_id: usuario_id },
+    });
+  }
+
+  async buscaUmEventoUsuario(
+    usuario_id: number,
+    id: number,
+  ): Promise<EventoEntity> {
+    return await this.eventoRepo.findOne({
+      where: { usuario_id: usuario_id, id: id },
     });
   }
 

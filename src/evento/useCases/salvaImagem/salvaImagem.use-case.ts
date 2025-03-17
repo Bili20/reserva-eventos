@@ -1,45 +1,44 @@
 import {
-  ForbiddenException,
   HttpException,
   Inject,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
 import { Payload } from 'src/autenticacao/models/dtos/payload.dto';
-import { minioClient } from 'src/config/minioConfig';
 import { SalvaImagemDto } from 'src/evento/models/dtos/salvaImagem.dto';
-import { BuscaUmEventoUsecase } from '../buscaUmEvento/buscaUmEvento.use-case';
-// Identificar se o evento é da pessoa para salvar a imagem
+import { AtualizaEventoUseCase } from '../atualizaEvento/atualizaEvento.use-case';
+import { Buckeradapter } from 'src/evento/bucket/bucket.adapter';
+import { BuscaUmEventoUsuarioUseCase } from '../buscaUmEventoUsuario/buscaUmEventoUsuario.use-case';
 @Injectable()
 export class SalvaImagemUseCase {
-  @Inject(BuscaUmEventoUsecase)
-  private readonly buscaUmEventoUsecase: BuscaUmEventoUsecase;
+  constructor(
+    private readonly buscaUmEventoUsuarioUseCase: BuscaUmEventoUsuarioUseCase,
+    private readonly atualizaEventoUseCase: AtualizaEventoUseCase,
+    private readonly buckeradapter: Buckeradapter,
+  ) {}
 
   async execute(param: SalvaImagemDto, usuario: Payload) {
-    const imagemNomeOriginal = param.imagem.originalname + new Date().getTime();
     try {
-      const evento = await this.buscaUmEventoUsecase.execute(param.evento_id);
-      if (evento.usuario_id != usuario.sub) {
-        throw new ForbiddenException({
-          message: 'Sem permissão para adicionar imagem.',
-        });
-      }
-      const existeBucket = await minioClient.bucketExists(
-        process.env.MINIO_BUCKET_NAME,
-      );
+      const evento = await this.buscaUmEventoUsuarioUseCase.execute({
+        id: param.evento_id,
+        usuario_id: usuario.sub,
+      });
+      let antigoNomeImagem = evento.imagem;
+      const novoNomeImagem = evento.renomearImagem(param.imagem.originalname);
 
-      if (!existeBucket) {
-        await minioClient.makeBucket(process.env.MINIO_BUCKET_NAME);
-      }
-
-      await minioClient.putObject(
-        process.env.MINIO_BUCKET_NAME,
-        imagemNomeOriginal,
+      await this.buckeradapter.salvar(
+        novoNomeImagem,
+        antigoNomeImagem,
         param.imagem.buffer,
+      );
+      await this.atualizaEventoUseCase.execute(
+        param.evento_id,
+        { imagem: novoNomeImagem },
+        usuario,
       );
     } catch (e) {
       throw new HttpException(
-        e.response ?? new InternalServerErrorException(),
+        e.response ?? new InternalServerErrorException(e),
         e.status ?? 500,
       );
     }
