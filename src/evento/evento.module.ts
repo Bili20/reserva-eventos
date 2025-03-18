@@ -11,8 +11,11 @@ import { AtualizaEventoUseCase } from './useCases/atualizaEvento/atualizaEvento.
 import { AtualizaEventoController } from './useCases/atualizaEvento/atualizaEvento.controller';
 import { BuscaEventoUsuarioUseCase } from './useCases/buscaEventoUsuario/buscaEventoUsuario.use-case';
 import { BuscaEventoUsuarioController } from './useCases/buscaEventoUsuario/bsucaEventoUsuario.controller';
-import { Buckeradapter } from './bucket/bucket.facade';
+import { BucketFacade } from './bucket/bucket.facade';
 import { BuscaUmEventoUsuarioUseCase } from './useCases/buscaUmEventoUsuario/buscaUmEventoUsuario.use-case';
+import { BuscaTodosEventosUseCase } from './useCases/buscaTodosEventos/buscaTodosEventos.use-case';
+import { BuscaTodosEventosController } from './useCases/buscaTodosEventos/buscaTodosEventos.controller';
+import { BuscaUmEventoController } from './useCases/buscaUmEvento/buscaUmEvento.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([EventoEntity])],
@@ -24,14 +27,17 @@ import { BuscaUmEventoUsuarioUseCase } from './useCases/buscaUmEventoUsuario/bus
     AtualizaEventoUseCase,
     BuscaEventoUsuarioUseCase,
     BuscaUmEventoUsuarioUseCase,
+    BuscaTodosEventosUseCase,
     { provide: 'IEventoRepo', useExisting: EventoRepo },
-    Buckeradapter,
+    BucketFacade,
   ],
   controllers: [
     CriaEventoController,
     SalvaImagemController,
     AtualizaEventoController,
     BuscaEventoUsuarioController,
+    BuscaTodosEventosController,
+    BuscaUmEventoController,
   ],
 })
 export class EventoModule {}

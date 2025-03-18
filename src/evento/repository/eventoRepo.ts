@@ -19,10 +19,32 @@ export class EventoRepo implements IEventoRepo {
     return await this.eventoRepo.findOne({ where: { id: id } });
   }
 
-  async buscaEventoUsuario(usuario_id: number): Promise<EventoEntity[]> {
+  async buscaEventosUsuario(usuario_id: number): Promise<EventoEntity[]> {
     return await this.eventoRepo.find({
       where: { usuario_id: usuario_id },
     });
+  }
+
+  async buscaTodosEventos(
+    pagina: number,
+    quantidade: number,
+  ): Promise<EventoEntity[]> {
+    return await this.eventoRepo
+      .createQueryBuilder('evento')
+      .select([
+        'evento.id as id',
+        'evento.titulo as titulo',
+        'evento.data as data',
+        'evento.horario as horario',
+        'evento.capacidade as capacidade',
+        'evento.valor as valor',
+        'evento.capacidadeSobrando as capacidade_sobrando',
+      ])
+      .addSelect(`COUNT(*) OVER()`, 'total')
+      .where('evento.capacidadeSobrando > 0 AND evento.data >= NOW()')
+      .limit(quantidade)
+      .offset((pagina - 1) * quantidade)
+      .getRawMany();
   }
 
   async buscaUmEventoUsuario(

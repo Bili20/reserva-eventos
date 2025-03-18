@@ -1,6 +1,8 @@
 import { IBucket } from '../models/interfaces/bucket.interface';
 import { minioClient } from 'src/config/minioConfig';
 import * as dotenv from 'dotenv';
+import internal from 'node:stream';
+import { BadRequestException } from '@nestjs/common';
 dotenv.config();
 export class BucketFacade implements IBucket {
   async salvar(
@@ -29,9 +31,21 @@ export class BucketFacade implements IBucket {
     );
   }
 
-  async buscaUmaImagem(imagem: string): Promise<any> {
+  async buscaUmaImagem(imagem: string): Promise<string> {
     if (imagem) {
-      return await minioClient.getObject(process.env.MINIO_BUCKET_NAME, imagem);
+      const imagemStream = await minioClient.getObject(
+        process.env.MINIO_BUCKET_NAME,
+        imagem,
+      );
+
+      const imagemBuffer = await new Promise<Buffer>((resolve, reject) => {
+        const chunks: Buffer[] = [];
+        imagemStream.on('data', (chunk) => chunks.push(chunk));
+        imagemStream.on('error', reject);
+        imagemStream.on('end', () => resolve(Buffer.concat(chunks)));
+      });
+
+      return `data:image/*;base64,${imagemBuffer.toString('base64')}`;
     }
     return null;
   }
