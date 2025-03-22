@@ -39,5 +39,6 @@ import { BuscaUmEventoController } from './useCases/buscaUmEvento/buscaUmEvento.
     BuscaTodosEventosController,
     BuscaUmEventoController,
   ],
+  exports: [BuscaUmEventoUsecase],
 })
 export class EventoModule {}

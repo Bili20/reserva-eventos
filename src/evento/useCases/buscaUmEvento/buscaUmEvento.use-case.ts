@@ -17,6 +17,6 @@ export class BuscaUmEventoUsecase {
     if (!evento) {
       throw new NotFoundException({ message: 'Evento não encontrado.' });
     }
-    return { ...evento, imagem };
+    return { evento, imagem };
   }
 }

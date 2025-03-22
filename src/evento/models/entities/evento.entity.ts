@@ -84,4 +84,20 @@ export class EventoEntity {
     this.imagem = valores[0] + new Date().getTime() + '.' + valores[1];
     return this.imagem;
   }
+
+  validaDonoEvento(usuario_id: number) {
+    if (this.usuario_id == usuario_id) {
+      throw new BadRequestException({
+        message: 'Não é possivel reservar este evento pois ele já é seu.',
+      });
+    }
+  }
+
+  validaCapacidade() {
+    if (this.capacidadeSobrando <= 0) {
+      throw new BadRequestException({
+        message: 'Evento esta sem capacidade para mais pessoas.',
+      });
+    }
+  }
 }
