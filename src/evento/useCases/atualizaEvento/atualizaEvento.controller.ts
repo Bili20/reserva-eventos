@@ -11,11 +11,15 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UsuarioAtual } from 'src/autenticacao/decorator/usuarioAtual.decorator';
-
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+@ApiTags('Evento')
 @Controller('evento')
 export class AtualizaEventoController {
   constructor(private readonly atualizaEventoUseCase: AtualizaEventoUseCase) {}
 
+  @ApiOperation({
+    summary: 'Rota responsavel por atualizar os dados do evento.',
+  })
   @Patch(':id')
   async atualiza(
     @Param('id') id: number,
