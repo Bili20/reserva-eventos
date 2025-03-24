@@ -16,6 +16,7 @@ import { BuscaUmEventoUsuarioUseCase } from './useCases/buscaUmEventoUsuario/bus
 import { BuscaTodosEventosUseCase } from './useCases/buscaTodosEventos/buscaTodosEventos.use-case';
 import { BuscaTodosEventosController } from './useCases/buscaTodosEventos/buscaTodosEventos.controller';
 import { BuscaUmEventoController } from './useCases/buscaUmEvento/buscaUmEvento.controller';
+import { DescontoCapacidade } from './useCases/descontoCapacidade/descontoCapacidade';
 
 @Module({
   imports: [TypeOrmModule.forFeature([EventoEntity])],
@@ -28,6 +29,7 @@ import { BuscaUmEventoController } from './useCases/buscaUmEvento/buscaUmEvento.
     BuscaEventoUsuarioUseCase,
     BuscaUmEventoUsuarioUseCase,
     BuscaTodosEventosUseCase,
+    DescontoCapacidade,
     { provide: 'IEventoRepo', useExisting: EventoRepo },
     BucketFacade,
   ],
@@ -39,6 +41,6 @@ import { BuscaUmEventoController } from './useCases/buscaUmEvento/buscaUmEvento.
     BuscaTodosEventosController,
     BuscaUmEventoController,
   ],
-  exports: [BuscaUmEventoUsecase],
+  exports: [BuscaUmEventoUsecase, AtualizaEventoUseCase, DescontoCapacidade],
 })
 export class EventoModule {}

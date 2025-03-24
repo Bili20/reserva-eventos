@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { IEventoRepo } from '../models/interfaces/eventoRepo.interface';
 import { Injectable } from '@nestjs/common';
 import { EventoEntity } from '../models/entities/evento.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 
 @Injectable()
 export class EventoRepo implements IEventoRepo {
@@ -56,7 +56,11 @@ export class EventoRepo implements IEventoRepo {
     });
   }
 
-  async atualiza(id: number, param: EventoEntity): Promise<void> {
-    await this.eventoRepo.update(id, param);
+  async atualiza(
+    id: number,
+    param: EventoEntity,
+    manager: EntityManager,
+  ): Promise<void> {
+    await manager.update(EventoEntity, id, param);
   }
 }

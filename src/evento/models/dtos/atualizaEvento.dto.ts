@@ -28,6 +28,10 @@ export class AtualizaEventoDto {
   @ApiPropertyOptional()
   capacidade?: number;
 
+  @IsNumber()
+  @IsOptional()
+  capacidadeSobrando?: number;
+
   @IsString()
   @IsOptional()
   @ApiPropertyOptional()

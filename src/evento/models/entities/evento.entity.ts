@@ -100,4 +100,13 @@ export class EventoEntity {
       });
     }
   }
+
+  descontoCapacidade(quantidade: number) {
+    if (quantidade > this.capacidade) {
+      throw new BadRequestException({
+        message: 'Não tem capacidade suficiente para a quantidade requisitada.',
+      });
+    }
+    this.capacidadeSobrando -= quantidade;
+  }
 }

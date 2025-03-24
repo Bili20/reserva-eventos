@@ -1,3 +1,4 @@
+import { EntityManager } from 'typeorm';
 import { EventoEntity } from '../entities/evento.entity';
 
 export interface IEventoRepo {
@@ -9,5 +10,9 @@ export interface IEventoRepo {
     quantidade: number,
   ): Promise<EventoEntity[]>;
   buscaUmEventoUsuario(usuario_id: number, id: number): Promise<EventoEntity>;
-  atualiza(id: number, param: EventoEntity): Promise<void>;
+  atualiza(
+    id: number,
+    param: EventoEntity,
+    manager: EntityManager,
+  ): Promise<void>;
 }

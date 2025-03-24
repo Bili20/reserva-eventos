@@ -9,9 +9,11 @@ export class CriaReservaDto {
   @ApiProperty()
   evento_id: number;
 
-  @IsOptional()
-  usuario?: Payload;
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty({ description: 'quantidade que pretende reservar.' })
+  quantidade: number;
 
   @IsOptional()
-  valor?: number;
+  usuario?: Payload;
 }

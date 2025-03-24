@@ -6,7 +6,6 @@ import * as dotenv from 'dotenv';
 import { AutenticacaoModule } from './autenticacao/autenticacao.module';
 import { TypeOrmConfig } from './config/typeormConfig';
 import { EventoModule } from './evento/evento.module';
-import { PagamentoModule } from './pagamento/pagamento.module';
 import { ReservaModule } from './reserva/reserva.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { APP_GUARD } from '@nestjs/core';
@@ -33,7 +32,6 @@ dotenv.config();
     EventoModule,
     UsuarioModule,
     ReservaModule,
-    PagamentoModule,
     AutenticacaoModule,
   ],
   providers: [

@@ -12,7 +12,7 @@ export class BuscaUmEventoUsuarioUseCase {
       param.id,
     );
     if (!evento) {
-      throw new BadRequestException({ message: 'Nenhum evento encontrado.' });
+      throw new BadRequestException({ message: 'Evento não encontrado.' });
     }
     return evento;
   }
