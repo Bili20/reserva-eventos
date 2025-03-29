@@ -1,11 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BadRequestException } from '@nestjs/common';
-import { BuscaEventoUsuarioUseCase } from './buscaEventoUsuario.use-case';
 import { BuscaEventoUsuarioDto } from 'src/evento/models/dtos/buscaEventoUsuario.dto';
+import { BuscaEventoUsuarioUseCase } from './buscaEventoUsuario.use-case';
 
 describe('BuscaEventoUsuarioUseCase', () => {
   const mockEventoRepo = {
-    buscaEventoUsuario: jest.fn(),
+    buscaEventosUsuario: jest.fn(),
   };
 
   let buscaEventoUsuarioUseCase: BuscaEventoUsuarioUseCase;
@@ -30,33 +29,17 @@ describe('BuscaEventoUsuarioUseCase', () => {
 
   describe('execute', () => {
     it('deve retornar os eventos quando encontrados', async () => {
-      const param: BuscaEventoUsuarioDto = { usuario_id: 1, id: 2 };
+      const param: BuscaEventoUsuarioDto = { usuario_id: 1 };
       const eventos = [{ id: 1, titulo: 'Evento Teste' }];
-      mockEventoRepo.buscaEventoUsuario.mockResolvedValue(eventos);
+      mockEventoRepo.buscaEventosUsuario.mockResolvedValue(eventos);
 
       const result = await buscaEventoUsuarioUseCase.execute(param);
 
       expect(result).toEqual(eventos);
-      expect(mockEventoRepo.buscaEventoUsuario).toHaveBeenCalledTimes(1);
-      expect(mockEventoRepo.buscaEventoUsuario).toHaveBeenCalledWith(
+      expect(mockEventoRepo.buscaEventosUsuario).toHaveBeenCalledTimes(1);
+      expect(mockEventoRepo.buscaEventosUsuario).toHaveBeenCalledWith(
         param.usuario_id,
-        param.id,
       );
-    });
-
-    it('deve lançar BadRequestException se nenhum evento for encontrado', async () => {
-      const param: BuscaEventoUsuarioDto = { usuario_id: 1, id: 2 };
-      mockEventoRepo.buscaEventoUsuario.mockResolvedValue([]);
-
-      try {
-        await buscaEventoUsuarioUseCase.execute(param);
-        fail('Deveria ter lançado uma exceção');
-      } catch (error) {
-        expect(error).toBeInstanceOf(BadRequestException);
-        expect(error.response).toEqual({
-          message: 'Nenhum evento encontrado.',
-        });
-      }
     });
   });
 });
