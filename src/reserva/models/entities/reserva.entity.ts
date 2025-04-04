@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { EventoEntity } from 'src/evento/models/entities/evento.entity';
 import { UsuarioEntity } from 'src/usuario/models/entities/usuario.entity';
 import {
@@ -33,4 +34,10 @@ export class ReservaEntity {
   @ManyToOne(() => EventoEntity, (evento: EventoEntity) => evento.reserva)
   @JoinColumn({ name: 'evento_id' })
   evento: EventoEntity;
+
+  validaQuantidade(quantiade: number) {
+    if (quantiade > this.quantidade || quantiade <= 0) {
+      throw new BadRequestException('Informe uma quantidade valida.');
+    }
+  }
 }

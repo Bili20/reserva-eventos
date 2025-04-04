@@ -17,4 +17,23 @@ export class ReservaRepo implements IReservaRepo {
   ): Promise<ReservaEntity> {
     return await manager.save(param);
   }
+
+  async update(param: ReservaEntity, manager: EntityManager): Promise<void> {
+    await manager.update(ReservaEntity, param.id, {
+      quantidade: param.quantidade,
+    });
+  }
+
+  async buscaReservaUsuario(
+    evento_id: number,
+    usuario_id: number,
+  ): Promise<ReservaEntity> {
+    return await this.reservaRepo.findOne({
+      where: { evento_id: evento_id, usuario_id: usuario_id },
+    });
+  }
+
+  async deletaReserva(id: number, manager: EntityManager): Promise<void> {
+    await manager.delete(ReservaEntity, id);
+  }
 }

@@ -5,7 +5,7 @@ import { EntityManager } from 'typeorm';
 import { BuscaUmEventoUsecase } from '../buscaUmEvento/buscaUmEvento.use-case';
 
 @Injectable()
-export class DescontoCapacidade {
+export class ManipulaCapacidadeEvento {
   constructor(
     @Inject('IEventoRepo')
     private readonly eventoRepo: IEventoRepo,

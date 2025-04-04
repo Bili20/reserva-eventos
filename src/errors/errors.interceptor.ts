@@ -37,7 +37,6 @@ export class ErrorsInterceptor implements NestInterceptor {
               err?.message ?? err?.detail ?? err
             } || route: ${request.path} || mathod: ${request.method}\r\n`,
           );
-          console.log(err);
           return throwError(
             () =>
               new InternalServerErrorException({
