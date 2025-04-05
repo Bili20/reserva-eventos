@@ -8,7 +8,9 @@ export class BuscaEventoUsuarioUseCase {
   private readonly eventoRepo: IEventoRepo;
 
   async execute(param: BuscaEventoUsuarioDto) {
-    const eventos = await this.eventoRepo.buscaEventosUsuario(param.usuario_id);
+    const eventos = await this.eventoRepo.buscaEventosDoUsuario(
+      param.usuario_id,
+    );
     if (!eventos) {
       throw new BadRequestException({ message: 'Nenhum evento encontrado.' });
     }

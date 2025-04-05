@@ -4,7 +4,7 @@ import { EventoEntity } from '../entities/evento.entity';
 export interface IEventoRepo {
   criar(param: EventoEntity): Promise<void>;
   buscaUm(id: number): Promise<EventoEntity>;
-  buscaEventosUsuario(usuario_id: number): Promise<EventoEntity[]>;
+  buscaEventosDoUsuario(usuario_id: number): Promise<EventoEntity[]>;
   buscaTodosEventos(
     pagina: number,
     quantidade: number,

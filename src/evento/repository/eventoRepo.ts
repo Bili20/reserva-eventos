@@ -1,17 +1,21 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { IEventoRepo } from '../models/interfaces/eventoRepo.interface';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { EventoEntity } from '../models/entities/evento.entity';
 import { EntityManager, Repository } from 'typeorm';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class EventoRepo implements IEventoRepo {
   constructor(
     @InjectRepository(EventoEntity)
     private readonly eventoRepo: Repository<EventoEntity>,
+    @Inject(CACHE_MANAGER) private cacheService: Cache,
   ) {}
 
   async criar(param: EventoEntity): Promise<void> {
+    await this.cacheService.del('eventos_1_10');
     await this.eventoRepo.save(param);
   }
 
@@ -19,7 +23,7 @@ export class EventoRepo implements IEventoRepo {
     return await this.eventoRepo.findOne({ where: { id: id } });
   }
 
-  async buscaEventosUsuario(usuario_id: number): Promise<EventoEntity[]> {
+  async buscaEventosDoUsuario(usuario_id: number): Promise<EventoEntity[]> {
     return await this.eventoRepo.find({
       where: { usuario_id: usuario_id },
     });
@@ -29,7 +33,14 @@ export class EventoRepo implements IEventoRepo {
     pagina: number,
     quantidade: number,
   ): Promise<EventoEntity[]> {
-    return await this.eventoRepo
+    const cacheEventos = await this.cacheService.get<EventoEntity[]>(
+      `eventos_${pagina}_${quantidade}`,
+    );
+
+    if (cacheEventos) {
+      return cacheEventos;
+    }
+    const dadosEventos = await this.eventoRepo
       .createQueryBuilder('evento')
       .select([
         'evento.id as id',
@@ -44,7 +55,17 @@ export class EventoRepo implements IEventoRepo {
       .where('evento.capacidadeSobrando > 0 AND evento.data >= NOW()')
       .limit(quantidade)
       .offset((pagina - 1) * quantidade)
+      .orderBy('evento.id', 'DESC')
       .getRawMany();
+
+    if (dadosEventos.length) {
+      await this.cacheService.set(
+        `eventos_${pagina}_${quantidade}`,
+        dadosEventos,
+      );
+    }
+
+    return dadosEventos;
   }
 
   async buscaUmEventoUsuario(
@@ -61,6 +82,7 @@ export class EventoRepo implements IEventoRepo {
     param: EventoEntity,
     manager: EntityManager,
   ): Promise<void> {
+    await this.cacheService.reset();
     await manager.update(EventoEntity, id, param);
   }
 }
