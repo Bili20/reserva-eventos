@@ -1,6 +1,6 @@
 # API de Reserva de Eventos
 
-Este projeto é uma API desenvolvida com o framework NestJS para demonstrar meus conhecimentos em desenvolvimento backend. A API permite o cadastro, atualização, busca e reserva de eventos, além de autenticação JWT de usuários, Jest para testes unitarios utilização do MinIO para armazenameto de foto e Redis para fazer o cache de dados mais acessados.
+Este projeto é uma API desenvolvida com o framework NestJS com TypeORM para demonstrar meus conhecimentos em desenvolvimento backend. A API permite o cadastro, atualização, busca e reserva de eventos, além de autenticação JWT de usuários, Jest para testes unitarios utilização do MinIO para armazenameto de foto e Redis para fazer o cache de dados mais acessados.
 
 ## Tecnologias Utilizadas
 
