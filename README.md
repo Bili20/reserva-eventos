@@ -8,6 +8,7 @@ Este projeto é uma API desenvolvida com o framework NestJS com TypeORM para dem
 - TypeScript
 - Jest
 - PostgreSQL
+- TypeORM
 - Redis
 - MinIO
 - Docker
