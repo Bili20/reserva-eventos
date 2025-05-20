@@ -1,7 +1,17 @@
 # API de Reserva de Eventos
 
-Este projeto é uma API desenvolvida com o framework NestJS para demonstrar meus conhecimentos em desenvolvimento backend. A API permite o cadastro, atualização, busca e reserva de eventos, além de autenticação de usuários.
+Este projeto é uma API desenvolvida com o framework NestJS para demonstrar meus conhecimentos em desenvolvimento backend. A API permite o cadastro, atualização, busca e reserva de eventos, além de autenticação de usuários, utilização do MinIO para armazenameto de foto e Redis para fazer o cache de dados mais acessados.
 
+## Tecnologias Utilizadas
+
+- NestJS
+- TypeScript
+- PostgreSQL
+- Redis
+- MinIO
+- Docker
+
+As Imagens são guardads no Minio, pode ser acessado usando localhost:9001 como padrão.
 ## Estrutura do Projeto
 
 A estrutura do projeto é organizada da seguinte forma:
@@ -182,14 +192,3 @@ $ npm run test
 # test coverage
 $ npm run test:cov
 ```
-
-## Tecnologias Utilizadas
-
-- [NestJS](https://nestjs.com/)
-- TypeScript
-- PostgreSQL
-- Redis
-- MinIO
-- Docker
-
-As Imagens são guardads no Minio, pode ser acessado usando localhost:9001 como padrão.
