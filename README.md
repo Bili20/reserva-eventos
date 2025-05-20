@@ -6,6 +6,7 @@ Este projeto é uma API desenvolvida com o framework NestJS para demonstrar meus
 
 - NestJS
 - TypeScript
+- Jest
 - PostgreSQL
 - Redis
 - MinIO
